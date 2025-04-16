@@ -1,28 +1,45 @@
-// src/models/ProjectMember.js
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-const User = require('./User');
-const Project = require('./Project');
+const db = require('.././../config/db');
+ 
 
-class ProjectMember extends Model {}
+class ProjectMember {
+  static tableName = 'project_members';
 
-ProjectMember.init({
-  role: {
-    type: DataTypes.STRING,
-    allowNull: false
+  static async addMember(projectId, userId, role) {
+    return db(this.tableName)
+      .insert({
+        project_id: projectId,
+        user_id: userId,
+        role,
+      })
+      .returning('*');
   }
-}, {
-  sequelize,
-  modelName: 'ProjectMember',
-  tableName: 'project_members',
-  timestamps: true
-});
 
-// Relasi dengan Project dan User
-ProjectMember.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(ProjectMember, { foreignKey: 'user_id' });
+  static async removeMember(projectId, userId) {
+    return db(this.tableName)
+      .where({ project_id: projectId, user_id: userId })
+      .del();
+  }
 
-ProjectMember.belongsTo(Project, { foreignKey: 'project_id' });
-Project.hasMany(ProjectMember, { foreignKey: 'project_id' });
+  static async updateRole(projectId, userId, role) {
+    return db(this.tableName)
+      .where({ project_id: projectId, user_id: userId })
+      .update({ role })
+      .returning('*');
+  }
+
+  static async getMembers(projectId) {
+    return db(this.tableName)
+      .where({ project_id: projectId })
+      .join('users', 'project_members.user_id', 'users.id')
+      .select('users.*', 'project_members.role', 'project_members.receive_email');
+  }
+
+  static async getProjectsForUser(userId) {
+    return db(this.tableName)
+      .where({ user_id: userId })
+      .join('projects', 'project_members.project_id', 'projects.id')
+      .select('projects.*', 'project_members.role');
+  }
+}
 
 module.exports = ProjectMember;

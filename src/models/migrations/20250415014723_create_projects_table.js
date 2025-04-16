@@ -2,6 +2,7 @@ exports.up = function(knex) {
     return knex.schema.createTable('projects', function(table) {
       table.increments('id').primary();
       table.string('project_number').unique().notNullable();
+      table.string('orderNumber').nullable();
       table.string('name').notNullable();
       table.text('description').nullable();
       table.date('start_date').notNullable();

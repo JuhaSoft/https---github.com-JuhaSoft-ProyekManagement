@@ -4,8 +4,8 @@ const userController = require('../controllers/UserController');
 const authenticateToken = require('../middlewares/authenticateToken');
 const authorizeRoles = require('../middlewares/authorizeRoles');
 const verifyToken  = require('../middlewares/verifyToken');
-const UserModel = require('../models/models/User');
 const sendDataWithToken = require('../middlewares/sendDataWithToken') 
+const UserModel = require('../models/models/User');
 // // Mengambil semua pengguna
 // router.get('/', (req, res) => {
 //     res.json({ message: 'Ini adalah daftar pengguna' });
