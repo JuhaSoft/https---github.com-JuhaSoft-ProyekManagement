@@ -1,0 +1,24 @@
+// seeds/05_budget_logs.js
+exports.seed = async function(knex) {
+    await knex('budget_logs').del();
+  
+    await knex('budget_logs').insert([
+      {
+        project_id: 1,
+        old_budget: 1500000000,
+        new_budget: 1600000000,
+        changed_by: 1,
+        reason: 'Penambahan scope kerja',
+        created_at: new Date()
+      },
+      {
+        project_id: 2,
+        old_budget: 500000000,
+        new_budget: 450000000,
+        changed_by: 1,
+        reason: 'Efisiensi material',
+        created_at: new Date()
+      }
+    ]);
+  };
+  

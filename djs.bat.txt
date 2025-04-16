@@ -1,0 +1,14 @@
+function Get-Tree {
+    param (
+        [string]$Path = ".",
+        [string[]]$Exclude = @("node_modules")
+    )
+    Get-ChildItem -Path $Path -Directory |
+    Where-Object { $_.Name -notin $Exclude } |
+    ForEach-Object {
+        Write-Output $_.FullName
+        Get-Tree -Path $_.FullName -Exclude $Exclude
+    }
+}
+
+Get-Tree

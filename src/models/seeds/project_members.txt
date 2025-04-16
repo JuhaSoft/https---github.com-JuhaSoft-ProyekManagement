@@ -1,0 +1,11 @@
+// seeds/03_project_members.js
+exports.seed = async function(knex) {
+    await knex('project_members').del();
+  
+    await knex('project_members').insert([
+      { project_id: 1, user_id: 2, role: 'Manager Proyek' },
+      { project_id: 2, user_id: 2, role: 'Supervisor' },
+      { project_id: 3, user_id: 3, role: 'Admin' }
+    ]);
+  };
+  

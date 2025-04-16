@@ -1,0 +1,56 @@
+// seeds/02_projects.js
+exports.seed = async function(knex) {
+    await knex('projects').del();
+  
+    await knex('projects').insert([
+      {
+        id: 1,
+        name: 'Pembangunan Gedung Kantor Pusat',
+        customer_name: 'PT Sinar Jaya Abadi',
+        start_date: '2025-04-01',
+        end_date: '2025-08-30',
+        warning_days_before_deadline: 7,
+        initial_budget: 1500000000,
+        remaining_budget: 1500000000,
+        project_code: 'PRJ-2025-001',
+        description: 'Pembangunan gedung kantor 5 lantai di pusat kota',
+        created_by: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
+        is_deleted: false
+      },
+      {
+        id: 2,
+        name: 'Renovasi Pabrik Unit 2',
+        customer_name: 'PT Maju Terus',
+        start_date: '2025-03-15',
+        end_date: '2025-06-10',
+        warning_days_before_deadline: 10,
+        initial_budget: 500000000,
+        remaining_budget: 500000000,
+        project_code: 'PRJ-2025-002',
+        description: 'Renovasi jalur produksi dan pengecatan ulang',
+        created_by: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
+        is_deleted: false
+      },
+      {
+        id: 3,
+        name: 'Proyek Perluasan Gudang',
+        customer_name: 'PT Gudang Makmur',
+        start_date: '2025-02-01',
+        end_date: '2025-05-31',
+        warning_days_before_deadline: 5,
+        initial_budget: 700000000,
+        remaining_budget: 700000000,
+        project_code: 'PRJ-2025-003',
+        description: 'Penambahan bangunan gudang seluas 500 m2',
+        created_by: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
+        is_deleted: false
+      }
+    ]);
+  };
+  
