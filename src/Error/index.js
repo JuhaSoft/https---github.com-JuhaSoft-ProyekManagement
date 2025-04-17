@@ -13,5 +13,12 @@ class NotFoundError extends Error {
       this.name = 'ForbiddenError';
     }
   }
-  
-  module.exports = { NotFoundError, ForbiddenError };
+  class BadRequestError extends Error {
+    constructor(message, details = []) {
+      super(message);
+      this.statusCode = 400;
+      this.name = 'BadRequestError';
+      this.details = details; // Detail error validasi
+    }
+  }
+  module.exports = { NotFoundError, ForbiddenError, BadRequestError};
