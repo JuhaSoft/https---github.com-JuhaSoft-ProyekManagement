@@ -1,6 +1,6 @@
 const BudgetRepository = require('../repositories/BudgetRepository');
 const ProjectRepository = require('../repositories/ProjectRepository');
-const { NotFoundError } = require('../errors');
+const { NotFoundError } = require('../Error');
 
 class BudgetService {
   static async setBudget(userId, projectId, amount) {
@@ -16,6 +16,16 @@ class BudgetService {
     });
 
     return budget;
+  }
+  static async deleteBudget(projectId) {
+    // Soft-delete budget
+    await BudgetRepository.softDelete(projectId);
+    
+    // Reset budget proyek (tanpa hapus data)
+    await ProjectRepository.update(projectId, { 
+      initial_budget: 0,
+      remaining_budget: 0 
+    });
   }
 }
 

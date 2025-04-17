@@ -12,13 +12,13 @@ class Project {
 
   static async findById(id) {
     console.log("Finding project by ID:", id); // Debugging
-    return db(this.tableName).where({ id }).first();
+    return db(this.tableName).where({ id }).whereNull('deleted_at').first();
   }
   static async findByProjectNumber(projectNumber) {
-    return db(this.tableName).where({ project_number: projectNumber }).first();
+    return db(this.tableName).where({ project_number: projectNumber }).whereNull('deleted_at').first();
   }
   static async findBy(orderNumber) {
-    return db(this.tableName).where({ orderNumber: orderNumber }).first();
+    return db(this.tableName).where({ orderNumber: orderNumber }).whereNull('deleted_at').first();
   }
   static async update(id, updates) {
     return db(this.tableName).where({ id }).update(updates).returning("*");

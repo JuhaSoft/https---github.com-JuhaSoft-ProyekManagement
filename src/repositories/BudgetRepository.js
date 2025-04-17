@@ -4,11 +4,11 @@ class BudgetRepository {
   static tableName = 'budgets';
 
   static async findByProjectId(projectId) {
-    return db(this.tableName).where({ project_id: projectId }).first();
+    return db(this.tableName).where({ project_id: projectId }).whereNull('deleted_at').first();
   }
 
   static async createOrUpdate(projectId, amount) {
-    const existing = await this.findByProjectId(projectId);
+    const existing = await this.findByProjectId(projectId).whereNull('deleted_at');
     
     if (existing) {
       const [budget] = await db(this.tableName)
@@ -23,6 +23,30 @@ class BudgetRepository {
       return budget;
     }
   }
+  static async softDelete(projectId) {
+    await db(this.tableName)
+      .where({ project_id: projectId })
+      .update({ deleted_at: new Date() });
+  }
+  
+  static async findByProjectId(projectId) {
+    return db(this.tableName)
+      .where({ project_id: projectId })
+      .whereNull('deleted_at') // Hanya ambil yang aktif
+      .first();
+  }
+  static async softDelete(projectId) {
+  await db(this.tableName)
+    .where({ project_id: projectId })
+    .update({ deleted_at: new Date() });
+}
+
+static async findByProjectId(projectId) {
+  return db(this.tableName)
+    .where({ project_id: projectId })
+    .whereNull('deleted_at') // Hanya ambil yang aktif
+    .first();
+}
 }
 
 module.exports = BudgetRepository;

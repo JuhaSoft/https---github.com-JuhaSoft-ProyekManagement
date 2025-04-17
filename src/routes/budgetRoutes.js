@@ -1,17 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const budgetController = require('../controllers/budgetController');
-const authMiddleware = require('../middlewares/auth');
+const authenticateToken = require('../middlewares/authenticateToken');
+const authorizeRoles = require('../middlewares/authorizeRoles');
+const verifyToken  = require('../middlewares/verifyToken');
+const sendDataWithToken = require('../middlewares/sendDataWithToken') 
 
 router.post(
   '/projects/:projectId/budget',
-  authMiddleware,
+  authenticateToken,
+  verifyToken,
+  sendDataWithToken,
+  authorizeRoles('super_admin','admin'),
   budgetController.setBudget
 );
 
 router.get(
   '/projects/:projectId/budget',
-  authMiddleware,
+  authenticateToken,
+  verifyToken,
+  sendDataWithToken,
+  authorizeRoles('super_admin','admin'),
   budgetController.getBudget
 );
 

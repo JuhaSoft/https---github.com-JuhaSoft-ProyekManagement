@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const ProjectDTO = require('../dtos/ProjectDTO');
+const ProjectDTO = require('../models/dto/ProjectDTO');
 
 class ProjectRepository {
   static tableName = 'projects';
@@ -14,6 +14,7 @@ class ProjectRepository {
   static async findById(id) {
     const project = await db(this.tableName)
       .where({ id })
+      .whereNull('deleted_at')
       .first();
     return project ? new ProjectDTO(project) : null;
   }

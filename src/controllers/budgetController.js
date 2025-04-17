@@ -23,3 +23,11 @@ exports.getBudget = async (req, res) => {
     res.status(error.statusCode || 500).json({ error: error.message });
   }
 };
+exports.deleteBudget = async (req, res) => {
+  try {
+    await BudgetService.deleteBudget(req.params.projectId);
+    res.json({ message: 'Budget deleted successfully' });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+};

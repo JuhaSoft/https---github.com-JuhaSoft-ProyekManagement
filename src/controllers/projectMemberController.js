@@ -22,3 +22,29 @@ exports.getMembers = async (req, res) => {
     res.status(error.statusCode || 500).json({ error: error.message });
   }
 };
+exports.updateMemberRole = async (req, res) => {
+  try {
+    const result = await ProjectMemberService.updateMemberRole(
+      req.user.id,
+      req.params.projectId,
+      req.params.userId,
+      req.body.role
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+};
+
+exports.removeMember = async (req, res) => {
+  try {
+    await ProjectMemberService.removeMember(
+      req.user.id,
+      req.params.projectId,
+      req.params.userId
+    );
+    res.json({ message: 'Member removed successfully' });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+};

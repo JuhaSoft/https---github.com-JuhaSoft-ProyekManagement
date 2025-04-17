@@ -8,7 +8,7 @@ class Expense {
   }
 
   static async findById(id) {
-    return db(this.tableName).where({ id }).first();
+    return db(this.tableName).where({ id }).whereNull('deleted_at').first();
   }
 
   static async findByProjectId(projectId) {

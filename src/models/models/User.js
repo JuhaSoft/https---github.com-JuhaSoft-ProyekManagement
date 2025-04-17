@@ -7,11 +7,11 @@ const UserModel = {
   },
 
   async findById(id) {
-    return await db('users').where({ id }).first();
+    return await db('users').where({ id }).whereNull('deleted_at').first();
   },
 
   async findByEmail(email) {
-    return await db('users').where({ email }).first();
+    return await db('users').where({ email }).whereNull('deleted_at').first();
   },
 
   async create(data) {

@@ -21,7 +21,7 @@ router.post("/",
     authenticateToken,
     verifyToken,
     sendDataWithToken,
-    authorizeRoles('super_admin'),
+    authorizeRoles('super_admin',"admin"),
      userController.createUser);
 
 // Endpoint untuk update user berdasarkan ID

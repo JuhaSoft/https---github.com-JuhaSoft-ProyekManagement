@@ -8,7 +8,7 @@ class Budget {
   }
 
   static async findByProjectId(projectId) {
-    return db(this.tableName).where({ project_id: projectId }).first();
+    return db(this.tableName).where({ project_id: projectId }).whereNull('deleted_at').first();
   }
 
   static async updateByProjectId(projectId, updates) {
